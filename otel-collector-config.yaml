@@ -17,7 +17,11 @@ exporters:
     endpoint: "otel.eu-west-1.checklyhq.com:4317"
     headers:
       authorization: "${env:CHECKLY_OTEL_API_KEY}"
+extensions:
+  zpages:
+    endpoint: :55679
 service:
+  extensions: [zpages]
   pipelines:
     traces:
       receivers: [otlp]
