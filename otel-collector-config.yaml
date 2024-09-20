@@ -1,47 +1,25 @@
 receivers:
   otlp:
     protocols:
-      grpc:
       http:
-
-exporters:
-  debug:
-    verbosity: detailed
-
-  prometheus:
-    endpoint: "0.0.0.0:8889"
-    const_labels:
-      label1: value1
-
-  logging:
-
-  zipkin:
-    endpoint: "http://zipkin.railway.internal:9411/api/v2/spans"
-    format: proto
-
-  otlp/jaeger:
-    endpoint: jaeger.railway.internal:4317
-    tls:
-      insecure: true
-
+      grpc:
 processors:
   batch:
-
-extensions:
-  health_check:
-  pprof:
-    endpoint: :1888
-  zpages:
-    endpoint: :55679
-
+  filter/checkly:
+    error_mode: ignore
+    traces:
+      span:
+        # remove all spans that the trace state doesn't have an object
+        # which key is "checkly" and value is "true"
+        - 'trace_state["checkly"] != "true"'
+exporters:
+  otlp/checkly:
+    endpoint: "otel.eu-west-1.checklyhq.com:4317"
+    headers:
+      authorization: "${env:CHECKLY_OTEL_API_KEY}"
 service:
-  extensions: [pprof, zpages, health_check]
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
-      exporters: [logging, zipkin, otlp/jaeger, debug]
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [logging, prometheus, debug]
+      processors: [filter/checkly, batch]
+      exporters: [otlp/checkly]
