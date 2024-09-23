@@ -27,11 +27,3 @@ service:
       receivers: [otlp]
       processors: [filter/checkly, batch]
       exporters: [otlp/checkly]
-  telemetry:
-    metrics:
-      readers:
-        pull:
-          exporter:
-            prometheus:
-              host: '0.0.0.0'
-              port: 8888
