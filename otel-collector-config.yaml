@@ -1,7 +1,7 @@
 receivers:
   otlp:
     protocols:
-      http:
+      http: 0.0.0.0:4318
       grpc:
 processors:
   batch:
