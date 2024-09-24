@@ -18,21 +18,15 @@ exporters:
     endpoint: "otel.eu-west-1.checklyhq.com:4317"
     headers:
       authorization: "ot_4991dcf79c694b34b43e6e5ed29657c0"
-extensions:
-  zpages:
-    endpoint: :55679
+      exporters:
+  debug:
+    use_internal_logger: false
+    verbosity: detailed
+    sampling_initial: 5
+    sampling_thereafter: 200
 service:
-  extensions: [zpages]
   pipelines:
     traces:
       receivers: [otlp]
       processors: [filter/checkly, batch]
-      exporters: [otlp/checkly]
-  telemetry:
-    metrics:
-      readers:
-        pull:
-          exporter:
-            prometheus:
-              host: '0.0.0.0'
-              port: 8889
+      exporters: [otlp/checkly, debug]
