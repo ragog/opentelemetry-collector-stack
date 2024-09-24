@@ -14,7 +14,7 @@ For information on how to deploy the the collector and app, check out [the tutor
 
 ## Technical Details
 
-When you deploy this collector and stack from the Railway template by clicking the button above, each of the following services will be deployed.
+When you deploy this collector and stack from the Railway template by clicking the button above, each of the following services will be deployed
 
 ### OpenTelemetry Collector
 
