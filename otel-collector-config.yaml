@@ -19,6 +19,11 @@ exporters:
     headers:
       authorization: "${env:CHECKLY_OTEL_API_KEY}"
       exporters:
+  otlp/checkly-demo:
+    endpoint: "otel.eu-west-1.checklyhq.com:4317"
+    headers:
+      authorization: "${env:CHECKLY_OTEL_API_KEY_DEMO}"
+      exporters:
   debug:
     use_internal_logger: false
     verbosity: detailed
@@ -29,4 +34,4 @@ service:
     traces:
       receivers: [otlp]
       processors: [filter/checkly, batch]
-      exporters: [otlp/checkly, debug]
+      exporters: [otlp/checkly, otlp/checkly-demo, debug]
