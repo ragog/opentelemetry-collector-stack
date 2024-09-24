@@ -17,7 +17,7 @@ exporters:
   otlp/checkly:
     endpoint: "otel.eu-west-1.checklyhq.com:4317"
     headers:
-      authorization: "ot_4991dcf79c694b34b43e6e5ed29657c0"
+      authorization: "${env:CHECKLY_OTEL_API_KEY}"
       exporters:
   debug:
     use_internal_logger: false
