@@ -39,4 +39,4 @@ service:
     traces:
       receivers: [otlp]
       processors: [filter/checkly, batch]
-      exporters: [otlp/checkly, otlp/checkly-demo, debug]
+      exporters: [otlp/checkly, otlp/checkly-demo, otlp/checkly-demo-1, debug]
